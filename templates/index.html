@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real Estate Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="chat-container">
+        <h2>Real Estate Assistant Chatbot</h2>
+
+        <!-- Clear Button -->
+        <div style="text-align: right;">
+            <a href="{{ url_for('clear') }}" style="color: red; text-decoration: none;">🗑️ Clear Chat</a>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+            <!-- <textarea name="user_text" rows="4" cols="50" placeholder="Ask your question..." required></textarea><br><br> -->
+            <textarea name="user_text" rows="4" cols="50" placeholder="Ask your question..."></textarea><br><br>
+            <input type="file" name="image"><br><br>
+            <input type="submit" value="Ask" class="ask-btn">
+        </form>
+
+        <hr>
+
+        <!-- Chat History -->
+        {% if chat_history %}
+            {% for chat in chat_history %}
+                <div class="chat-entry">
+                    <p><strong class="user-msg">You:</strong> {{ chat.user }}</p>
+
+                    {% if chat.image %}
+                        <img src="data:image/png;base64,{{ chat.image }}" width="300" style="margin-bottom:10px;" />
+                    {% endif %}
+
+                    <p><strong class="bot-msg">Bot:</strong><br>
+                        {{ chat.bot | safe | replace('\n', '<br>') }}
+                    </p>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
