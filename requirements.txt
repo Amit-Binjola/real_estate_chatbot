@@ -1,0 +1,7 @@
+flask
+flask-session
+transformers
+torch
+pillow
+groq
+torchvision 
